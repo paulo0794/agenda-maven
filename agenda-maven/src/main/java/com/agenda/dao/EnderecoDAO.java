@@ -1,29 +1,27 @@
 package com.agenda.dao;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
+import com.agenda.model.Endereco;
 import com.agenda.model.Pessoa;
 import com.agenda.util.ConnectionFactory;
 import com.mysql.jdbc.Connection;
 
-public class PessoaDAO {
-
+public class EnderecoDAO {
+	
 	private Connection connection;
 
-	public void cadastrar(Pessoa pessoa) {
+	public void cadastrar(Endereco endereco) {
 
-		String SQL = "insert into pessoas (nome) values (?)";
+		String SQL = "insert into endereco (logradouro) values (?)";
 
 		try {
 
 			this.connection = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = this.connection.prepareStatement(SQL);
 
-			stmt.setString(1, pessoa.getNome());
+			stmt.setString(1, endereco.getLogradouro());
 			
 
 			stmt.execute();
@@ -34,17 +32,16 @@ public class PessoaDAO {
 		}
 
 	}
-
 	
+	
+	public void remover(Endereco endereco) {
 
-	public void remover(Pessoa pessoa) {
-
-		String SQL = "delete from pessoas where id=?";
+		String SQL = "delete from endereco where id=?";
 
 		try {
 			this.connection = new ConnectionFactory().getConnection();
 			PreparedStatement stmt = connection.prepareStatement(SQL);
-			stmt.setLong(1, pessoa.getId());
+			stmt.setLong(1, endereco.getId());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -52,18 +49,19 @@ public class PessoaDAO {
 		}
 	}
 	
-	public void alterar(Pessoa pessoa) {
+	
+	public void alterar(Endereco endereco) {
 		
-	    String SQL = "update pessoas set nome=? where id=?";
+	    String SQL = "update endereco set logradouro=? where id=?";
 	    
 	    try {
 	    	
 	    	this.connection = new ConnectionFactory().getConnection();
 	        PreparedStatement stmt = this.connection.prepareStatement(SQL);
 	        
-	        stmt.setString(1, pessoa.getNome());
+	        stmt.setString(1, endereco.getLogradouro());
 	        
-	        stmt.setLong(2, pessoa.getId());
+	        stmt.setLong(2, endereco.getId());
 	        stmt.execute();
 	        stmt.close();
 	        
