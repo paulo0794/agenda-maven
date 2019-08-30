@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.agenda.model.Contato;
+import com.agenda.model.Endereco;
 import com.agenda.model.Pessoa;
 import com.agenda.service.CadastraUsuarioService;
 
@@ -22,14 +24,16 @@ public class CadastraUsuarioServlet extends HttpServlet {
 	
 		request.setCharacterEncoding("UTF-8");
 		Pessoa pessoa = new Pessoa();
+		Contato contato = new Contato();
+		Endereco endereco = new Endereco();
 		
 		if(null != request.getParameter("id") && !"".equals(request.getParameter("id"))) {
 			pessoa.setId(Long.parseLong(request.getParameter("id")));
 		}
 		pessoa.setNome(request.getParameter("nome"));
-		pessoa.setEmail(request.getParameter("email"));
-		pessoa.setEndereco(request.getParameter("endereco"));
-		pessoa.setTelefone(request.getParameter("telefone"));
+		contato.setEmail(request.getParameter("email"));
+		endereco.setLogradouro(request.getParameter("endereco"));
+		contato.setTelefone(request.getParameter("telefone"));
 		
 		this.service = new CadastraUsuarioService();
 		
@@ -44,7 +48,7 @@ public class CadastraUsuarioServlet extends HttpServlet {
 		} catch (Exception e) {
 			out.println("<html>");
 			out.println("<body>");
-			out.println("Falha ao realizar o cadastro!");
+			out.println("Falha ao realizar o cadastro!" +e);
 			out.println("</body>");
 			out.println("</html>");
 		}

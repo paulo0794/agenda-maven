@@ -6,10 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.agenda.model.Contato;
+import com.agenda.model.Endereco;
 import com.agenda.model.Pessoa;
 import com.agenda.util.ConnectionFactory;
+import com.mysql.jdbc.Connection;
 
 public class BuscaDAO {
+	
+	private Connection connection;
 	
 	public List<Pessoa> buscarPessoas() {
 
@@ -26,11 +31,13 @@ public class BuscaDAO {
 
 			while (rs.next()) {
 				Pessoa pessoa = new Pessoa();
+				Contato contato = new Contato();
+				Endereco endereco = new Endereco();
 				pessoa.setId(rs.getLong("id"));
-				pessoa.setNome(rs.getString("nome"));
-				pessoa.setEmail(rs.getString("email"));
-				pessoa.setEndereco(rs.getString("endereco"));
-				pessoa.setTelefone(rs.getString("telefone"));
+				pessoa.setNome(rs.getString("pessoas.nome"));
+				contato.setEmail(rs.getString("contato.email"));
+				endereco.setLogradouro(rs.getString("endereco.logradouro"));
+				contato.setTelefone(rs.getString("contato.telefone"));
 				pessoas.add(pessoa);
 			}
 
